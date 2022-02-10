@@ -3,7 +3,7 @@ project(sem_1)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(TEST_DIR "solution")
+set(SOLUTION_DIR "solution")
 #             ^^^^^^^^ change this directory to test your solution;
 #                      also change it in tests.cpp's include
 
@@ -22,7 +22,12 @@ FetchContent_MakeAvailable(googletest)
 
 # Set up the project
 
-add_executable(sem_1 tests.cpp ${TEST_DIR}/json_parser.cpp ${TEST_DIR}/json_parser.h tests.cpp solution/json_parser.cpp solution/json_parser.h)
+add_executable(
+        sem_1
+        ${SOLUTION_DIR}/json_parser.cpp
+        ${SOLUTION_DIR}/json_parser.h
+        tests.cpp
+)
 target_link_libraries(
         sem_1
         gtest_main
