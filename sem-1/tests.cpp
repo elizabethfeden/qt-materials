@@ -26,6 +26,7 @@ TEST(Tokens, ValueTokens) {
   }
 }
 
+
 TEST(Tokens, ArrayToken) {
   {
     std::shared_ptr<json::TokenContainer<json::TokenVector::iterator>> array =
@@ -109,32 +110,32 @@ std::shared_ptr<json::Object> MakeTestObject(const std::vector<json::TokenVector
   return std::make_shared<json::Object>(map);
 }
 
-TEST(Traversers, ObjectMemberCounter) {
-  ObjectMemberCounter counter;
-  {
-    auto obj1 = MakeTestObject({}, {});
-    auto obj2 = std::make_shared<json::Object>(json::ObjectMap({
-      {"object", obj1}
-    }));
-    ASSERT_EQ(counter.CountObjectMembers(obj1), 2);
-    ASSERT_EQ(counter.CountObjectMembers(obj2), 3);
-  }
-  // -- 2 --
-  // Your tests here
-}
-
-TEST(Traversers, ObjectComparator) {
-  ObjectComparator comparator;
-  // -- 3 --
-  // Your tests here
-  // Important testcases: empty object, object with objects inside it
-}
-
-TEST(Traversers, ListReverser) {
-  ListReverser reverser;
-  // -- 4 --
-  // Your tests here
-  // Hint: use ObjectComparator to compare reverser's result with expected result
-  // Important testcases: empty list, list with one element, list with odd
-  // elements count, list with even elements count
-}
+//TEST(Traversers, ObjectMemberCounter) {
+//  ObjectMemberCounter counter;
+//  {
+//    auto obj1 = MakeTestObject({}, {});
+//    auto obj2 = std::make_shared<json::Object>(json::ObjectMap({
+//      {"object", obj1}
+//    }));
+//    ASSERT_EQ(counter.CountObjectMembers(obj1), 2);
+//    ASSERT_EQ(counter.CountObjectMembers(obj2), 3);
+//  }
+//  // -- 2 --
+//  // Your tests here
+//}
+//
+//TEST(Traversers, ObjectComparator) {
+//  ObjectComparator comparator;
+//  // -- 3 --
+//  // Your tests here
+//  // Important testcases: empty object, object with objects inside it
+//}
+//
+//TEST(Traversers, ListReverser) {
+//  ListReverser reverser;
+//  // -- 4 --
+//  // Your tests here
+//  // Hint: use ObjectComparator to compare reverser's result with expected result
+//  // Important testcases: empty list, list with one element, list with odd
+//  // elements count, list with even elements count
+//}
