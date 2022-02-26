@@ -20,7 +20,7 @@ TokenVector::iterator Array::End() {
 
 std::string Array::ToString() const {
   std::string result = "[ ";
-  for (const auto& token: value_) {
+  for (const auto& token : value_) {
     result += token->ToString();
     result += ", ";
   }
@@ -52,4 +52,35 @@ std::string Object::ToString() const {
 
 Object::Object(const ObjectMap& values) : value_(values) {}
 
+std::shared_ptr<Token> Object::GetValue(const std::string& name) {
+  auto value_iter = value_.find(name);
+  return value_iter != value_.end() ? value_iter->second : nullptr;
+}
+
 }  // namespace json
+
+int ObjectMemberCounter::CountObjectMembers(
+    const std::shared_ptr<json::Object>& object) {
+  counter_ = 0;
+  Traverse(object);
+  return counter_ - 1;
+}
+
+void ObjectMemberCounter::OnInt(const std::shared_ptr<json::Int>& token) {
+  counter_++;
+}
+
+void ObjectMemberCounter::OnString(const std::shared_ptr<json::String>& token) {
+  counter_++;
+}
+
+void ObjectMemberCounter::OnArray(const std::shared_ptr<json::Array>& token) {
+  counter_++;
+}
+
+void ObjectMemberCounter::OnObject(const std::shared_ptr<json::Object>& token) {
+  counter_++;
+  for (auto iterator = token->Begin(); iterator != token->End(); ++iterator) {
+    Traverse(iterator->second);
+  }
+}

@@ -99,41 +99,23 @@ TEST(Tokens, ObjectToken) {
   }
 }
 
-std::shared_ptr<json::Object> MakeTestObject(const std::vector<json::TokenVector>& arrays, const std::vector<std::string>& names) {
-  json::ObjectMap map = {
-      {"age", std::make_shared<json::Int>(42)},
-      {"greeting", std::make_shared<json::String>("hello")}
-  };
-  for (size_t i = 0; i < arrays.size(); i++) {
-    map[names[i]] = std::make_shared<json::Array>(arrays[i]);
+TEST(Traversers, ObjectMemberCounter) {
+  ObjectMemberCounter counter;
+  {
+    auto inner_object = std::make_shared<json::Object>(
+        json::ObjectMap({{"age", std::make_shared<json::Int>(42)}})
+    );
+    auto object = std::make_shared<json::Object>(
+        json::ObjectMap({{"name", inner_object}})
+    );
+    ASSERT_EQ(counter.CountObjectMembers(inner_object), 1);
+    ASSERT_EQ(counter.CountObjectMembers(object), 2);
   }
-  return std::make_shared<json::Object>(map);
 }
 
-//TEST(Traversers, ObjectMemberCounter) {
-//  ObjectMemberCounter counter;
-//  {
-//    auto obj1 = MakeTestObject({}, {});
-//    auto obj2 = std::make_shared<json::Object>(json::ObjectMap({
-//      {"object", obj1}
-//    }));
-//    ASSERT_EQ(counter.CountObjectMembers(obj1), 2);
-//    ASSERT_EQ(counter.CountObjectMembers(obj2), 3);
-//  }
-//  // -- 2 --
-//  // Your tests here
-//}
-//
-//TEST(Traversers, ObjectComparator) {
-//  ObjectComparator comparator;
-//  // -- 3 --
-//  // Your tests here
-//  // Important testcases: empty object, object with objects inside it
-//}
-//
 //TEST(Traversers, ListReverser) {
 //  ListReverser reverser;
-//  // -- 4 --
+//  // -- 3 --
 //  // Your tests here
 //  // Hint: use ObjectComparator to compare reverser's result with expected result
 //  // Important testcases: empty list, list with one element, list with odd
