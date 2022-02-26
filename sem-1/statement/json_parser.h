@@ -90,19 +90,18 @@ class Traverser {
 // -- 2 --
 class ObjectMemberCounter : public Traverser {
  public:
-  int CountObjectMembers(const std::shared_ptr<json::Object>& object);
+  int CountObjectMembers(const std::shared_ptr<json::Object>& object) ;
 };
 
 // -- 3 --
-class ObjectComparator : public Traverser {
- public:
-  bool ObjectsEqual(const std::shared_ptr<json::Object>& one, const std::shared_ptr<json::Object>& other);
-};
-
-// -- 4 --
 class ListReverser : public Traverser {
  public:
+  // Reverses all the lists in the given object. If a list is inside other
+  // list/object, it will not be reversed.
   void ReverseLists(const std::shared_ptr<json::Object>& object);
+  // Reverses all the lists in the given object. If a list is inside other
+  // list/object, it will be reversed, too.
+  void ReverseListsRecursive(const std::shared_ptr<json::Object>& object);
 };
 
 #endif // JSON_PARSER_H

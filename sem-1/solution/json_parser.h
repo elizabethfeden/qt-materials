@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <vector>
 #include <iostream>
+#include <stack>
 
 namespace json {
 
@@ -72,6 +73,7 @@ class Array : public TokenContainer<TokenVector::iterator> {
   TokenVector value_;
 };
 
+
 using ObjectMap = std::unordered_map<std::string, std::shared_ptr<Token>>;
 
 class Object : public TokenContainer<ObjectMap::iterator> {
@@ -80,7 +82,7 @@ class Object : public TokenContainer<ObjectMap::iterator> {
   ObjectMap::iterator Begin() override;
   ObjectMap::iterator End() override;
   std::string ToString() const override;
-
+  std::shared_ptr<Token> GetValue(const std::string& key);
  private:
   ObjectMap value_;
 };
@@ -93,46 +95,61 @@ class Object : public TokenContainer<ObjectMap::iterator> {
 // another library). But we want to perform some specific actions on our
 // JSON object structure. Let's see how we can do this.
 
-//class Traverser {
-// protected:
-//  void Traverse(const std::shared_ptr<json::Token>& token) {
-//    if (auto cast_result = std::dynamic_pointer_cast<json::Int>(token);
-//        cast_result != nullptr) {
-//      OnInt(cast_result);
-//    } else if (auto cast_result =
-//          std::dynamic_pointer_cast<json::String>(token); cast_result != nullptr) {
-//      OnString(cast_result);
-//    } else if (auto cast_result =
-//          std::dynamic_pointer_cast<json::Array>(token); cast_result != nullptr) {
-//      OnArray(cast_result);
-//    } else if (auto cast_result =
-//          std::dynamic_pointer_cast<json::Object>(token); cast_result != nullptr) {
-//      OnObject(cast_result);
-//    }
-//  }
-//
-//  virtual void OnInt(const std::shared_ptr<json::Int>& token) {}
-//  virtual void OnString(const std::shared_ptr<json::String>& token) {}
-//  virtual void OnArray(const std::shared_ptr<json::Array>& token) {}
-//  virtual void OnObject(const std::shared_ptr<json::Object>& token) {}
-//};
-//
-//// -- 2 --
-//class ObjectMemberCounter : public Traverser {
-// public:
-//  int CountObjectMembers(const std::shared_ptr<json::Object>& object);
-//};
-//
-//// -- 3 --
-//class ObjectComparator : public Traverser {
-// public:
-//  bool ObjectsEqual(const std::shared_ptr<json::Object>& one, const std::shared_ptr<json::Object>& other);
-//};
-//
-//// -- 4 --
+class Traverser {
+ protected:
+  void Traverse(const std::shared_ptr<json::Token>& token) {
+    if (auto cast_result = std::dynamic_pointer_cast<json::Int>(token);
+        cast_result != nullptr) {
+      OnInt(cast_result);
+    } else if (auto cast_result =
+          std::dynamic_pointer_cast<json::String>(token); cast_result !=
+                                                          nullptr) {
+      OnString(cast_result);
+    } else if (auto cast_result =
+          std::dynamic_pointer_cast<json::Array>(token); cast_result !=
+                                                         nullptr) {
+      OnArray(cast_result);
+    } else if (auto cast_result =
+          std::dynamic_pointer_cast<json::Object>(token); cast_result !=
+                                                          nullptr) {
+      OnObject(cast_result);
+    }
+  }
+
+  virtual void OnInt(const std::shared_ptr<json::Int>& token) {}
+
+  virtual void OnString(const std::shared_ptr<json::String>& token) {}
+
+  virtual void OnArray(const std::shared_ptr<json::Array>& token) {}
+
+  virtual void OnObject(const std::shared_ptr<json::Object>& token) {}
+};
+
+// -- 2 --
+class ObjectMemberCounter : public Traverser {
+ public:
+  int CountObjectMembers(const std::shared_ptr<json::Object>& object);
+
+ protected:
+  void OnInt(const std::shared_ptr<json::Int>& token) override;
+  void OnString(const std::shared_ptr<json::String>& token) override;
+  void OnArray(const std::shared_ptr<json::Array>& token) override;
+  void OnObject(const std::shared_ptr<json::Object>& token) override;
+
+ private:
+  int counter_{0};
+};
+
+// -- 3 --
+// BONUS (6 points)
 //class ListReverser : public Traverser {
 // public:
+//  // Reverses all the lists in the given object. If a list is inside other
+//  // list/object, it will not be reversed.
 //  void ReverseLists(const std::shared_ptr<json::Object>& object);
+//  // Reverses all the lists in the given object. If a list is inside other
+//  // list/object, it will be reversed, too.
+//  void ReverseListsRecursive(const std::shared_ptr<json::Object>& object);
 //};
 
-#endif // JSON_PARSER_H
+#endif  // JSON_PARSER_H
