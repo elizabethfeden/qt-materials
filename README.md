@@ -2,6 +2,12 @@
 Materials for my seminars. C++, Qt, fun (a little bit).
 
 ## Contents
+
+#### lectures
+- `mainwindow-demo`: creating a simple window in Qt
+- `widgets-demo`: widget examples, signals/slots and event example
+- `layouts-demo`: layout management
+
 #### sem-1
 - Writing a simple JSON Parser
 - Topics: C++ inheritance (virtual functions, abstract classes, dynamic cast, etc).
