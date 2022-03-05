@@ -1,13 +1,13 @@
 #pragma once
 
-#include <QMainWindow>
-#include <QLabel>
-#include <QComboBox>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QKeyEvent>
-#include <QGridLayout>
 #include <QCheckBox>
+#include <QComboBox>
+#include <QGridLayout>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMainWindow>
+#include <QPushButton>
 #include <vector>
 
 class MainWindow : public QMainWindow {
@@ -29,6 +29,4 @@ class MainWindow : public QMainWindow {
 
   std::vector<QPushButton*> buttons_;
   std::vector<QCheckBox*> check_boxes_;
-
 };
-
