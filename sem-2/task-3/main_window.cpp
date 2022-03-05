@@ -9,6 +9,12 @@ MainWindow::MainWindow() :
 
   CreateWidgets();
 
+  QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  for (int i = 0; i < kSize; ++i) {
+    buttons_[i]->setSizePolicy(policy);
+    check_boxes_[i]->setSizePolicy(policy);
+  }
+
   widget_->setLayout(layout_);
   setCentralWidget(widget_);
   ConnectWidgets();
