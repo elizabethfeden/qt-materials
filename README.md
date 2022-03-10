@@ -7,10 +7,16 @@ Materials for my seminars. C++, Qt, fun (a little bit).
 - `mainwindow-demo`: creating a simple window in Qt
 - `widgets-demo`: widget examples, signals/slots and event example
 - `layouts-demo`: layout management
+- `timers-demo`: different Qt timers
+- `painter-demo`: animation, QPainter, QGraphicsScene
 
 #### sem-1
 - Writing a simple JSON Parser
 - Topics: C++ inheritance (virtual functions, abstract classes, dynamic cast, etc).
+
+#### sem-2
+- Small funny Qt tasks like a clicker or a run-away button
+- Topics: Qt basics, widgets, signals/slots, event handling
 
 ## How to work here?
 - On seminar:
