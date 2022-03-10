@@ -30,8 +30,10 @@ class MainWindow : public QMainWindow {
   std::vector<int> counters_ = {0, 0, 0};
 
   QTimer* timer1_;
+
   int timer2_;
   bool is_timer2_active_{false};
+
   QBasicTimer timer3_; // <- not a pointer!
 
 };
