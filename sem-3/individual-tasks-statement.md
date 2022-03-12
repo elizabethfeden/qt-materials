@@ -1,5 +1,25 @@
 # Seminar 3 task
 
+## Common tasks:
+
+### 1. Isometric projection of a cube
+
+https://en.wikipedia.org/wiki/Isometric_projection
+
+![](cube_base.png)
+
+* Learn what is isometric projection
+* Draw isometric 3D-axis of different colors in the center of the screen
+* Draw an axis-aligned unit cube in the center of origin
+  * Remember what is a projection matrix and rotation matrix
+  * https://en.wikipedia.org/wiki/Isometric_projection#Mathematics
+* Add controls to rotate the cube along different axis on 10 degrees
+* Enjoy your isometric projection :)
+
+![](cube_rotated.png)
+
+## Extra tasks:
+
 For extra points, complete one of the following tasks. Either show that it works or create a pull request.
 
 ### 1. Small cartoon
