@@ -15,8 +15,7 @@ PaintWidget::PaintWidget(QWidget *parent)
 QVector2D Project(const QVector3D& vector);
 void rotateRoundAxis(QVector<QVector3D>& points, double angle, int axis);
 
-void PaintWidget::Paint(QPainter* painter,
-                        double angle_x, double angle_y, double angle_z) {
+void PaintWidget::Paint(QPainter* painter, double* angles) {
 
     painter->fillRect(painter->window(), QColor(0xf1e8ff));
     painter->setPen(QColor(0xa50000));
@@ -34,9 +33,9 @@ void PaintWidget::Paint(QPainter* painter,
         {R, R, R},
         {L, R, R},
     };
-    rotateRoundAxis(coord, angle_x, 0);
-    rotateRoundAxis(coord, angle_y, 1);
-    rotateRoundAxis(coord, angle_z, 2);
+    for (int axis : {0, 1, 2}) {
+        rotateRoundAxis(coord, angles[axis], axis);
+    }
     QList<QPointF> projected;
     for (auto node : coord) {
         auto point = Project(node);

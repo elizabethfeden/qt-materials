@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
         s->setOrientation(Qt::Orientation::Horizontal);
 
         connect(s, &QSlider::valueChanged, this, [&, i](int value) {
-            coef_[i] = value / 100.;
+            coef_[i] = value / 1000.;
         });
     }
 
@@ -33,19 +33,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::paintEvent(QPaintEvent*) {
     QPainter painter(this);
-    paint_->Paint(&painter, Angle(0), Angle(1), Angle(2));
+    paint_->Paint(&painter, angle_);
 }
 
 void MainWindow::timerEvent(QTimerEvent*) {
     constexpr double kPeriod = M_PI * 2;
-    time_angle_ += .1;
-    if (time_angle_ > kPeriod) {
-        time_angle_ -= kPeriod;
+    for (int i : {0, 1, 2}) {
+        angle_[i] += coef_[i];
+        if (angle_[i] > kPeriod) {
+            angle_[i] -= kPeriod;
+        } else if (angle_[i] < kPeriod) {
+            angle_[i] += kPeriod;
+        }
     }
-    time_sin_ = sin(time_angle_);
     repaint();
-}
-
-double MainWindow::Angle(int axis) {
-    return sin(time_angle_) * coef_[axis];
 }

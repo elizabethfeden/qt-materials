@@ -22,14 +22,11 @@ public:
     void timerEvent(QTimerEvent*) override;
 
 private:
-    double Angle(int axis);
-
     PaintWidget *paint_;
     QBasicTimer* timer_;
     QSlider* slider_[3];
 
-    double time_angle_{};
-    double time_sin_{};
+    double angle_[3];
     double coef_[3];
 };
 
