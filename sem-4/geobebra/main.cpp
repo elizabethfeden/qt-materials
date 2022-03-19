@@ -1,5 +1,13 @@
-#include <iostream>
+#include <QApplication>
 
-int main() {
-  return 0;
+#include "main_window.h"
+
+int main(int argc, char* argv[]) {
+  QApplication app(argc, argv);
+  QCoreApplication::setApplicationName("Geobebra");
+
+  MainWindow window;
+  window.show();
+
+  return QApplication::exec();
 }
