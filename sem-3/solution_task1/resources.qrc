@@ -1,0 +1,7 @@
+<RCC>
+    <qresource>
+        <file>field.jpg</file>
+        <file>fox_right.png</file>
+        <file>fox_left.png</file>
+    </qresource>
+</RCC>
