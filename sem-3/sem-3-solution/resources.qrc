@@ -1,0 +1,6 @@
+<RCC>
+    <qresource>
+        <file>winner.jpg</file>
+        <file>looser.jpg</file>
+    </qresource>
+</RCC>
