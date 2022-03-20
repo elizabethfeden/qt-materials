@@ -42,20 +42,23 @@ void PlotDescriptorWidget::UpdatePolynomial(
   int cur_deg = parameters.size() - 1;
   for (double parameter : parameters) {
     if (std::fabs(parameter) < 1e-5) {
+      --cur_deg;
       continue;
     }
     if (!res.isEmpty() && parameter > 0) {
       res += "+";
     }
-    if (std::fabs(parameter - 1) > 1e-5) {
+    if (std::fabs(parameter - 1) > 1e-5 || cur_deg == 0) {
       res += QString::number(parameter);
     }
     if (cur_deg > 1) {
       res += "x^" + QString::number(cur_deg);
+    } else if (cur_deg == 1) {
+      res += "x";
     }
     --cur_deg;
   }
-  polynomial_->setText(res);
+  polynomial_->setText("y = " + res);
 }
 
 std::vector<double> PlotDescriptorWidget::GetParameters() const {
