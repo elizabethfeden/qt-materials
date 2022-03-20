@@ -25,6 +25,7 @@ void MainWindow::paintEvent(QPaintEvent* event) {
   QWidget::paintEvent(event);
   QPainter painter(this);
 
+  RefreshCurPlot();
   paint_widget_->Paint(&painter, cur_plot_);
 }
 
@@ -56,7 +57,7 @@ void MainWindow::RefreshCurPlot() {
       y += cur_parameter;
     }
     if (y > -height/2 && y < height / 2) {
-      cur_plot_.emplace_back(x, static_cast<int>(y));
+      cur_plot_.emplace_back(x, static_cast<int>(-y));
     }
   }
 }
