@@ -1,29 +1,21 @@
+#include <iostream>
 #include "main_window.h"
 
 MainWindow::MainWindow()
     : widget_(new QWidget(this)),
       layout_(new QGridLayout()),
       paint_widget_(new PaintWidget(widget_)),
-      line_edit_(new QLineEdit(widget_)),
-      add_button_(new QPushButton(widget_)),
-      delete_button_(new QPushButton(widget_)) {
+      plot_descriptor_(new PlotDescriptorWidget(widget_)) {
   resize(minimal_size_);
   setMinimumSize(minimal_size_);
-
-  add_button_->setText("Add");
-  delete_button_->setText("Delete");
-
-  RefreshCurPlot();
 
   ConnectWidgets();
 
   layout_->setRowStretch(0, 10);
   layout_->setRowStretch(1, 1);
 
-  layout_->addWidget(paint_widget_, 0, 0, 1, 2);
-  layout_->addWidget(add_button_, 1, 0);
-  layout_->addWidget(delete_button_, 1, 1);
-  layout_->addWidget(line_edit_, 2, 0, 1, 2);
+  layout_->addWidget(paint_widget_, 0, 0);
+  layout_->addWidget(plot_descriptor_, 1, 0);
 
   widget_->setLayout(layout_);
 
@@ -34,36 +26,34 @@ void MainWindow::paintEvent(QPaintEvent* event) {
   QWidget::paintEvent(event);
   QPainter painter(this);
 
-  RefreshCurPlot();
-  paint_widget_->Paint(&painter, cur_plot_);
+  UpdatePlot(plot_descriptor_->GetParameters());
+  paint_widget_->Paint(&painter, plot_.color, plot_.points);
 }
 
 void MainWindow::ConnectWidgets() {
-  connect(line_edit_,
-          &QLineEdit::editingFinished, [&]() {
-        RefreshCurPlot();
+  connect(plot_descriptor_,
+          &PlotDescriptorWidget::ColorSelected, [&](const QColor& color) {
+        plot_.color = color;
         repaint();
       });
 
-  connect(add_button_,
-          &QPushButton::clicked, [&]() {});
-
-  connect(delete_button_,
-          &QPushButton::clicked, [&]() {});
+  connect(plot_descriptor_,
+          &PlotDescriptorWidget::EnteredNewPolynomial,
+          [&](const std::vector<double>& parameters) {
+            UpdatePlot(parameters);
+            repaint();
+          });
 }
 
-void MainWindow::RefreshCurPlot() {
-  QStringList str_parameters = line_edit_->text().split(", ");
-  std::vector<double> parameters;
-  for (const auto& str_parameter : str_parameters) {
-    parameters.push_back(str_parameter.toDouble());
-  }
-
+void MainWindow::UpdatePlot(
+    const std::vector<double>& parameters) {
   int width = paint_widget_->width();
   int height = paint_widget_->height();
 
-  cur_plot_.clear();
-  cur_plot_.reserve(width);
+  auto& cur_plot = plot_.points;
+
+  cur_plot.clear();
+  cur_plot.reserve(width);
 
   for (int x = -width / 2; x < width / 2; ++x) {
     double y = 0;
@@ -72,7 +62,7 @@ void MainWindow::RefreshCurPlot() {
       y += cur_parameter;
     }
     if (y > -height / 2 && y < height / 2) {
-      cur_plot_.emplace_back(x, static_cast<int>(-y));
+      cur_plot.emplace_back(x, static_cast<int>(-y));
     }
   }
 }

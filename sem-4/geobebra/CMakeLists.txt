@@ -13,7 +13,12 @@ find_package(Qt5 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(geobebra main.cpp main_window.cpp main_window.h paint_widget.cpp paint_widget.h)
+add_executable(geobebra
+        main.cpp
+        main_window.cpp
+        paint_widget.cpp
+        plot_descriptor_widget.cpp
+        )
 
 target_link_libraries(geobebra
         Qt::Core

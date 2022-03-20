@@ -6,9 +6,12 @@
 class PaintWidget : public QWidget {
   Q_OBJECT
  public:
-  explicit PaintWidget(QWidget* parent);
+  explicit PaintWidget(QWidget* parent = nullptr);
 
-  void Paint(QPainter* painter, const std::vector<QPoint>& points);
+  void Paint(
+      QPainter* painter,
+      const QBrush& plot_brush,
+      const std::vector<QPoint>& points);
 };
 
 

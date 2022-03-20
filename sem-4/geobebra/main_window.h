@@ -7,29 +7,32 @@
 #include <QPushButton>
 
 #include "paint_widget.h"
+#include "plot_descriptor_widget.h"
 
 class MainWindow : public QMainWindow {
-  Q_OBJECT
+ Q_OBJECT
  public:
   MainWindow();
   void paintEvent(QPaintEvent* event) override;
 
  private:
   void ConnectWidgets();
-  void RefreshCurPlot();
+  void UpdatePlot(const std::vector<double>& parameters);
 
   QWidget* widget_;
   QGridLayout* layout_;
-  QLineEdit* line_edit_;
+
+  PlotDescriptorWidget* plot_descriptor_;
 
   QSize minimal_size_{500, 500};
 
-  std::vector<QPoint> cur_plot_;
+  struct PlotInfo {
+    std::vector<QPoint> points;
+    QColor color;
+  };
 
-  QPushButton* add_button_;
-  QPushButton* delete_button_;
+  PlotInfo plot_;
 
   PaintWidget* paint_widget_;
 };
-
 

@@ -4,9 +4,11 @@
 
 PaintWidget::PaintWidget(QWidget* parent) : QWidget(parent) {}
 
-void PaintWidget::Paint(QPainter* painter, const std::vector<QPoint>& points) {
+void PaintWidget::Paint(
+    QPainter* painter,
+    const QBrush& plot_brush,
+    const std::vector<QPoint>& points) {
   painter->save();
-  QBrush plot_brush;
   painter->setBrush(plot_brush);
   QPainterPath path;
   path.moveTo(points.front());
