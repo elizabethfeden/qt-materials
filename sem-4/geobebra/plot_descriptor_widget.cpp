@@ -1,24 +1,31 @@
 #include <cmath>
+#include <QColorDialog>
 #include "plot_descriptor_widget.h"
 
 PlotDescriptorWidget::PlotDescriptorWidget(QWidget* parent) :
     line_edit_(new QLineEdit(this)),
     polynomial_(new QLabel(this)),
-    color_dialog_(new QColorDialog(this)),
+    color_change_button_(new QPushButton(this)),
     layout_(new QGridLayout()) {
+  color_change_button_->setText("Set color");
+
   layout_->addWidget(line_edit_, 0, 0);
-  layout_->addWidget(color_dialog_, 0, 1);
+  layout_->addWidget(color_change_button_, 0, 1);
   layout_->addWidget(polynomial_, 0, 2);
   layout_->setColumnStretch(0, 4);
   layout_->setColumnStretch(1, 1);
   layout_->setColumnStretch(2, 2);
   ConnectWidgets();
+  setLayout(layout_);
 }
 
 void PlotDescriptorWidget::ConnectWidgets() {
-  connect(color_dialog_,
-          &QColorDialog::colorSelected, [&](const QColor& color) {
-        emit ColorSelected(color);
+  connect(color_change_button_,
+          &QPushButton::clicked, [&]() {
+        QColor color = QColorDialog::getColor(Qt::black, this);
+        if (color.isValid()) {
+          emit ColorSelected(color);
+        }
       });
 
   connect(line_edit_,
@@ -37,13 +44,16 @@ void PlotDescriptorWidget::UpdatePolynomial(
     if (std::fabs(parameter) < 1e-5) {
       continue;
     }
-    if (parameter > 0) {
+    if (!res.isEmpty() && parameter > 0) {
       res += "+";
     }
-    res += QString::number(parameter);
-    if (cur_deg != 0) {
+    if (std::fabs(parameter - 1) > 1e-5) {
+      res += QString::number(parameter);
+    }
+    if (cur_deg > 1) {
       res += "x^" + QString::number(cur_deg);
     }
+    --cur_deg;
   }
   polynomial_->setText(res);
 }

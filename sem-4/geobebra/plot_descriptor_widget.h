@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QLabel>
-#include <QColorDialog>
+#include <QPushButton>
 #include <QGridLayout>
 
 class PlotDescriptorWidget : public QWidget {
@@ -25,7 +25,7 @@ class PlotDescriptorWidget : public QWidget {
 
   QLineEdit* line_edit_;
   QLabel* polynomial_;
-  QColorDialog* color_dialog_;
+  QPushButton* color_change_button_;
 };
 
 

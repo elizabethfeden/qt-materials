@@ -10,7 +10,7 @@ class PaintWidget : public QWidget {
 
   void Paint(
       QPainter* painter,
-      const QBrush& plot_brush,
+      const QColor& plot_color,
       const std::vector<QPoint>& points);
 };
 

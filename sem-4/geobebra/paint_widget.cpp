@@ -6,10 +6,10 @@ PaintWidget::PaintWidget(QWidget* parent) : QWidget(parent) {}
 
 void PaintWidget::Paint(
     QPainter* painter,
-    const QBrush& plot_brush,
+    const QColor& plot_color,
     const std::vector<QPoint>& points) {
   painter->save();
-  painter->setBrush(plot_brush);
+  painter->setPen(plot_color);
   QPainterPath path;
   path.moveTo(points.front());
   for (const auto& point : points) {
@@ -26,8 +26,8 @@ void PaintWidget::Paint(
   axis_path.moveTo(-QWidget::width() / 2, 0);
   axis_path.lineTo(QWidget::width() / 2, 0);
 
-  QBrush axis_brush;
-  painter->setBrush(axis_brush);
+  QColor axis_color = Qt::black;
+  painter->setPen(axis_color);
   painter->drawPath(axis_path);
 
   painter->restore();
