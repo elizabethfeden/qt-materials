@@ -4,7 +4,6 @@
 
 PaintWidget::PaintWidget(QWidget* parent) : QWidget(parent) {}
 
-
 void PaintWidget::Paint(QPainter* painter, const std::vector<QPoint>& points) {
   painter->save();
   QBrush brush;
@@ -14,6 +13,9 @@ void PaintWidget::Paint(QPainter* painter, const std::vector<QPoint>& points) {
   for (const auto& point : points) {
     path.lineTo(point);
   }
+
+  painter->translate(QWidget::width() / 2, QWidget::height() / 2);
+
   painter->drawPath(path);
 
   painter->restore();

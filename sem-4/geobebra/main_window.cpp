@@ -10,8 +10,11 @@ MainWindow::MainWindow()
 
   ConnectWidgets();
 
+  layout_->setRowStretch(0, 10);
+  layout_->setRowStretch(1, 1);
+
   layout_->addWidget(paint_widget_, 0, 0);
-  layout_->addWidget(line_edit_, 0, 1);
+  layout_->addWidget(line_edit_, 1, 0);
 
   widget_->setLayout(layout_);
 
@@ -29,6 +32,7 @@ void MainWindow::ConnectWidgets() {
   connect(line_edit_,
           &QLineEdit::editingFinished, [&]() {
             RefreshCurPlot();
+            repaint();
           });
 }
 
@@ -38,13 +42,21 @@ void MainWindow::RefreshCurPlot() {
   for (const auto& str_parameter : str_parameters) {
     parameters.push_back(str_parameter.toDouble());
   }
-  cur_plot_.resize(paint_widget_->width());
-  for (int x = 0; x < paint_widget_->width(); ++x) {
+
+  int width = paint_widget_->width();
+  int height = paint_widget_->height();
+
+  cur_plot_.clear();
+  cur_plot_.reserve(width);
+
+  for (int x = -width / 2; x < width/2; ++x) {
     double y = 0;
     for (double cur_parameter : parameters) {
-      y += cur_parameter;
       y *= x;
+      y += cur_parameter;
     }
-    cur_plot_[x] = {x, static_cast<int>(y)};
+    if (y > -height/2 && y < height / 2) {
+      cur_plot_.emplace_back(x, static_cast<int>(y));
+    }
   }
 }
