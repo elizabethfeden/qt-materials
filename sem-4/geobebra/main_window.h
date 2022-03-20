@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow {
   QGridLayout* layout_;
   QLineEdit* line_edit_;
 
+  QSize minimal_size_{500, 500};
+
   std::vector<QPoint> cur_plot_;
 
   PaintWidget* paint_widget_;

@@ -5,7 +5,8 @@ MainWindow::MainWindow()
     layout_(new QGridLayout()),
     paint_widget_(new PaintWidget(widget_)),
     line_edit_(new QLineEdit(widget_)) {
-  line_edit_->setText("1");
+  resize(minimal_size_);
+  setMinimumSize(minimal_size_);
   RefreshCurPlot();
 
   ConnectWidgets();
