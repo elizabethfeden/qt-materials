@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include <QMainWindow>
 #include <QLineEdit>
+#include <QPushButton>
 
 #include "paint_widget.h"
 
@@ -24,6 +25,9 @@ class MainWindow : public QMainWindow {
   QSize minimal_size_{500, 500};
 
   std::vector<QPoint> cur_plot_;
+
+  QPushButton* add_button_;
+  QPushButton* delete_button_;
 
   PaintWidget* paint_widget_;
 };
