@@ -9,6 +9,8 @@ Materials for my seminars. C++, Qt, fun (a little bit).
 - `layouts-demo`: layout management
 - `timers-demo`: different Qt timers
 - `painter-demo`: animation, QPainter, QGraphicsScene
+- `menu-and-dialogs-demo`: can you guess what's in this demo? :D
+- `mvp-demo`: Model-View-Presenter example
 
 #### sem-1
 - Writing a simple JSON Parser
