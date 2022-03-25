@@ -8,7 +8,7 @@ class Model {
  public:
   const QString& Element(size_t i) const { return queue_[i]; }
   const size_t Size() const { return queue_.size(); }
-  
+
   void Pop() {
     if (!queue_.empty()) {
       queue_.erase(queue_.begin());
