@@ -20,6 +20,7 @@ add_executable(sem-4
         models.cpp
         views.cpp
         abstract_view.cpp
+        resources.qrc
         )
 
 target_link_libraries(sem-4
