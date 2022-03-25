@@ -1,9 +1,0 @@
-<RCC>
-    <qresource>
-        <file>dictionaries/adjectives.txt</file>
-		<file>dictionaries/adverbs.txt</file>
-		<file>dictionaries/english.txt</file>
-		<file>dictionaries/nouns.txt</file>
-		<file>dictionaries/russian.txt</file>
-    </qresource>
-</RCC>
