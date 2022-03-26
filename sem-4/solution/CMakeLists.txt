@@ -18,8 +18,9 @@ add_executable(sem-4
         controller.cpp
         abstract_view.cpp
         models.cpp
+        models.h
         views.cpp
-        abstract_view.cpp
+        abstract_model.h
         resources.qrc
         )
 
