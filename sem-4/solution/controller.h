@@ -27,4 +27,4 @@ class Controller {
 };
 
 
-#endif // CONTROLLER_H
+#endif  // CONTROLLER_H

@@ -1,14 +1,32 @@
+#include <QFile>
 #include "controller.h"
+#include <QRegularExpression>
+#include <queue>
 
 Controller::Controller(std::unique_ptr<AbstractModel> model) : model_(std::move(model)) {}
 
 std::vector<QString> Controller::Analyze(const QString& text, int top) {
-  // -- TASK --
-  // * Count words in text
-  // * Create results containing top words by count. Words should be present
-  // in model_'s active dictionaries.
-
-  return your_results;
+  static const QRegularExpression word("[a-zа-я']+");
+  QHash<QString, int> dict;
+  for (const auto& string : text.toLower().split(word)) {
+    if (dict.contains(string) ||
+        model_->FindWordInDictionaries(string)) {
+      dict[string]++;
+    }
+  }
+  std::vector<std::pair<int, QString>> pairs;
+  for (auto it = dict.begin(); it != dict.end(); ++it) {
+    pairs.emplace_back(it.value(), it.key());
+  }
+  std::priority_queue<std::pair<int, QString>>
+      heap(pairs.begin(), pairs.end());
+  std::vector<QString> result;
+  result.reserve(top);
+  for (int i = 0; i < top; ++i) {
+    result.push_back(heap.top().second);
+    heap.pop();
+  }
+  return result;
 }
 
 void Controller::SetActiveDictionaries(
@@ -17,8 +35,9 @@ void Controller::SetActiveDictionaries(
 }
 
 QString Controller::LoadText(const QString& filename) {
-  // -- TASK --
-  // Load text from file (in UTF-8 encoding)
-
+  QFile input(filename);
+  input.open(QFile::ReadOnly);
+  QString text = QString::fromUtf8(input.readAll());
+  input.close();
   return text;
 }

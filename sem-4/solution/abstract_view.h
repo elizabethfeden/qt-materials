@@ -33,4 +33,4 @@ class AbstractView {
 };
 
 
-#endif // ABSTRACT_VIEW_H
+#endif  // ABSTRACT_VIEW_H

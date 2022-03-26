@@ -28,4 +28,4 @@ class AbstractModel {
   };
 };
 
-#endif // ABSTRACT_MODEL_H
+#endif  // ABSTRACT_MODEL_H
