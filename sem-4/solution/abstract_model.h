@@ -11,7 +11,7 @@
 
 class AbstractModel {
  public:
-  virtual std::unordered_map<size_t, QString>
+  std::unordered_map<size_t, QString>
       GetAvailableDictionaries() const { return kDictionaryNames_; }
   virtual void SetActiveDictionaries(
       const std::vector<size_t>& active_dictionary_ids) = 0;

@@ -6,15 +6,14 @@ ConsoleView::ConsoleView(std::unique_ptr<Controller> controller) :
     AbstractView(std::move(controller)) {}
 
 bool ConsoleView::ParseCommand(const std::string& command) {
+  // TODO: Understand what to do here :)
   if (command == "#text") {
     GetText();
-    return true;
   }
   if (command.starts_with("#load_filename")) {
     filename_ = command.substr(15, command.size() - 15).data();
     controller_->LoadText(filename_);
     OnLoadCommand();
-    return true;
   }
   if (command.starts_with("#change_dictionaries")) {
     auto it = command.begin() + 20;
@@ -26,24 +25,23 @@ bool ConsoleView::ParseCommand(const std::string& command) {
       it = space_it;
     }
     OnActiveDictionariesChange();
-    return true;
   }
   if (command == "#results") {
     ShowResults(controller_->Analyze(text_));
-    return true;
   }
   if (command == "#exit") {
     return false;
   }
-  return false;
+  return true;
 }
 
 QString ConsoleView::GetFilenameToLoad() {
-  return filename_;
+  // TODO: Ask user what filename they need
 }
 
 void ConsoleView::SetText(const QString& text) {
   text_ = text;
+  // TODO: Show new text to user
 }
 
 QString ConsoleView::GetText() {
@@ -51,7 +49,7 @@ QString ConsoleView::GetText() {
 }
 
 std::vector<size_t> ConsoleView::GetActiveDictionaryIds() {
-  return dictionary_ids_;
+  // TODO: Ask user what ids they want changed
 }
 
 void ConsoleView::ShowResults(const std::vector<QString>& results) {

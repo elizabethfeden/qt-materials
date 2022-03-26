@@ -34,7 +34,7 @@ int RunConsole(const ModelOption& option) {
   return 0;
 }
 
-int main(int argc, char* argv[]) {\
+int main(int argc, char* argv[]) {
 //  return RunWindow(ModelOption::kHash, argc, argv);
 //  return RunWindow(ModelOption::kTrie, argc, argv);
 //  return RunConsole(ModelOption::kHash);

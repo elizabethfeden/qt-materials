@@ -17,20 +17,18 @@ bool HashModel::FindWordInDictionaries(const QString& word) {
 }
 
 HashModel::HashModel() {
-  for (int i = 1; i <= 6; i++) {
-    GetWords(i);
+  for (auto& entry : GetAvailableDictionaries()) {
+    LoadDictionary(entry.second);
   }
 }
 
-void HashModel::GetWords(size_t id) {
-  QSet<QString> current_words;
-  QString name = ":dictionaries/" + GetAvailableDictionaries()[id] + ".txt";
-  QFile file(name);
+void HashModel::LoadDictionary(const QString& dictionary_name) {
+  QFile file(":dictionaries/" + dictionary_name + ".txt");
   file.open(QFile::ReadOnly);
-  QString word;
+  QSet<QString> current_words;
   while (!file.atEnd()) {
-    word = QString::fromUtf8(file.readLine());
-    current_words.insert(word.toLower());
+    current_words.insert(QString::fromUtf8(file.readLine().toLower()));
   }
+  file.close();
   words_.push_back(std::move(current_words));
 }

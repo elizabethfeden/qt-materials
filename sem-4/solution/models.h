@@ -5,6 +5,7 @@
 #include <vector>
 #include <QString>
 #include <QSet>
+
 // -- TASK --
 // Implement the models. HashModel should store words entries in an
 // unordered set or map. TrieModel should implement search of words entries
@@ -18,7 +19,7 @@ class HashModel : public AbstractModel {
   bool FindWordInDictionaries(const QString& word) override;
 
  private:
-  void GetWords(size_t id);
+  void LoadDictionary(const QString& dictionary_name);
 
   std::vector<size_t> active_dictionaries_;
   std::vector<QSet<QString>> words_;

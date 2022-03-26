@@ -12,6 +12,7 @@
 class ConsoleView : public AbstractView {
  public:
   explicit ConsoleView(std::unique_ptr<Controller> controller);
+
   // Returns false if command is '#exit'.
   bool ParseCommand(const std::string& command);
 
