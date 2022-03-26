@@ -13,13 +13,14 @@
 class HashModel : public AbstractModel {
  public:
   HashModel();
-  void SetActiveDictionaries(const std::vector<size_t>& active_dictionary_ids) override;
+  void SetActiveDictionaries(
+      const std::vector<size_t>& active_dictionary_ids) override;
   bool FindWordInDictionaries(const QString& word) override;
 
  private:
-  void GetWords(const QString& name);
+  void GetWords(size_t id);
 
-  std::vector<size_t> dictionaries_;
+  std::vector<size_t> active_dictionaries_;
   std::vector<QSet<QString>> words_;
 };
 
