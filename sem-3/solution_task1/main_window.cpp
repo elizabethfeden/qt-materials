@@ -1,16 +1,10 @@
-//
-// Created by adamenko on 19.03.2022.
-//
-
-#include <iostream>
 #include "main_window.h"
 
 MainWindow::MainWindow() :
     scene_(new QGraphicsScene(this)),
     view_(new QGraphicsView(this)),
-    view_fox_(new QGraphicsView(this)),
-    fox_left_(new QGraphicsScene(this)),
-    fox_right_(new QGraphicsScene(this)),
+    field_(":field.jpg"),
+    fox_(":fox.png"),
     length_(new QSlider(Qt::Horizontal, this)),
     height_(new QSlider(Qt::Vertical, this)) {
   setFixedSize(815, 530);
@@ -39,52 +33,34 @@ MainWindow::MainWindow() :
 }
 
 void MainWindow::SetupScene() {
-  auto item = scene_->addPixmap(QPixmap(":field.jpg"));
+  scene_->addPixmap(field_);
   view_->setScene(scene_);
   view_->resize(765, 480);
 }
 
 
 void MainWindow::SetupFox() {
-  auto item_right = fox_right_->addPixmap(QPixmap(":fox_right.png"));
-  fox_width_ = static_cast<int>(item_right->boundingRect().width());
-  view_fox_->setScene(fox_right_);
-  view_fox_->setStyleSheet("background-color: transparent");
-  view_fox_->resize(87, 151);
+  fox_item_ = scene_->addPixmap(fox_);
+  fox_item_->setPos(0, 210);
+  fox_width_ = static_cast<int>(fox_item_->boundingRect().width());
 }
 
 void MainWindow::timerEvent(QTimerEvent* event) {
-  if (direction_ == right) {
-    if (event->timerId() == animation_timer_.timerId()) {
-      y_ = -abs(jump_height_ * sin(x_ / jump_length_));
-      view_fox_->setGeometry(x_, 210 + y_, 87, 150);
-      if (x_ + fox_width_ >= 765) {
-        direction_ = left;
-        auto item = fox_left_->addPixmap(QPixmap(":fox_left.png"));
-        view_fox_->setScene(fox_left_);
-        view_fox_->setStyleSheet("background-color: transparent");
-        view_fox_->resize(87, 151);
-        x_-= 0.5;
-      } else {
-        x_+= 0.5;
-      }
-      repaint();
+  if (event->timerId() == animation_timer_.timerId()) {
+    y_ = -abs(jump_height_ * sin(x_ / jump_length_));
+    fox_item_->setPos(x_, 210 + y_);
+    if (direction_ == DirectionTypes::kRight && x_ + fox_width_ >= 760) {
+      direction_ = DirectionTypes::kLeft;
+      fox_item_->setPixmap(fox_.transformed(QTransform().scale(-1, 1)));
+    } else if (direction_ == DirectionTypes::kLeft && x_ <= 0) {
+      direction_ = DirectionTypes::kRight;
+      fox_item_->setPixmap(fox_);
     }
-  } else {
-    if (event->timerId() == animation_timer_.timerId()) {
-      y_ = -abs(jump_height_ * sin(x_ / jump_length_));
-      view_fox_->setGeometry(x_, 210 + y_, 87, 150);
-      if (x_ <= 0) {
-        direction_ = right;
-        auto item = fox_right_->addPixmap(QPixmap(":fox_right.png"));
-        view_fox_->setScene(fox_right_);
-        view_fox_->setStyleSheet("background-color: transparent");
-        view_fox_->resize(87, 151);
-        x_+= 0.5;
-      } else {
-        x_-= 0.5;
-      }
-      repaint();
+    if (direction_ == DirectionTypes::kRight) {
+      x_ += 0.5;
+    } else {
+      x_ -= 0.5;
     }
+    repaint();
   }
 }

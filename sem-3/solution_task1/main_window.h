@@ -7,17 +7,16 @@
 #include <QBasicTimer>
 #include <QTimerEvent>
 #include <QGraphicsPixmapItem>
-#include <QGraphicsSceneHoverEvent>
-#include <QGraphicsSceneMouseEvent>
-#include <QMouseEvent>
+#include <QPixmap>
 #include <QSlider>
 
-enum DirectionTypes {
-  left, right
+enum class DirectionTypes {
+  kLeft,
+  kRight,
 };
 
 class MainWindow : public QMainWindow{
- Q_OBJECT
+  Q_OBJECT
  public:
   MainWindow();
   void SetupScene();
@@ -28,9 +27,9 @@ class MainWindow : public QMainWindow{
  private:
   QGraphicsScene* scene_;
   QGraphicsView* view_;
-  QGraphicsScene* fox_left_;
-  QGraphicsScene* fox_right_;
-  QGraphicsView* view_fox_;
+  QPixmap fox_;
+  QGraphicsPixmapItem* fox_item_;
+  QPixmap field_;
   QSlider* length_;
   QSlider* height_;
 
@@ -38,7 +37,7 @@ class MainWindow : public QMainWindow{
   double jump_height_{100};
   int fox_width_{0};
   double x_{0}, y_{0};
-  int direction_{right};
+  DirectionTypes direction_{DirectionTypes::kRight};
 
   QBasicTimer animation_timer_;
 };
