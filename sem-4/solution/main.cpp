@@ -15,13 +15,14 @@ std::unique_ptr<AbstractModel> GetModel(const ModelOption& option) {
   if (option == ModelOption::kHash) {
     return std::make_unique<HashModel>();
   } else {
-    return std::make_unique<TrieModel>();
+  //  return std::make_unique<TrieModel>();
   }
 }
 
 int RunWindow(const ModelOption& option, int argc, char* argv[]) {
   QApplication app(argc, argv);
   WindowView view(std::make_unique<Controller>(GetModel(option)));
+  view.show();
   return QApplication::exec();
 }
 
@@ -35,8 +36,8 @@ int RunConsole(const ModelOption& option) {
 }
 
 int main(int argc, char* argv[]) {
-//  return RunWindow(ModelOption::kHash, argc, argv);
+  return RunWindow(ModelOption::kHash, argc, argv);
 //  return RunWindow(ModelOption::kTrie, argc, argv);
 //  return RunConsole(ModelOption::kHash);
-  return RunConsole(ModelOption::kTrie);
+//  return RunConsole(ModelOption::kTrie);
 }

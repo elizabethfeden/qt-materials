@@ -20,6 +20,7 @@ HashModel::HashModel() {
   for (auto& entry : GetAvailableDictionaries()) {
     LoadDictionary(entry.second);
   }
+  active_dictionaries_ = {0,1,2,3,4,5};
 }
 
 void HashModel::LoadDictionary(const QString& dictionary_name) {
@@ -27,7 +28,7 @@ void HashModel::LoadDictionary(const QString& dictionary_name) {
   file.open(QFile::ReadOnly);
   QSet<QString> current_words;
   while (!file.atEnd()) {
-    current_words.insert(QString::fromUtf8(file.readLine().toLower()));
+    current_words.insert(QString::fromUtf8(file.readLine().toLower()).trimmed());
   }
   file.close();
   words_.push_back(std::move(current_words));
