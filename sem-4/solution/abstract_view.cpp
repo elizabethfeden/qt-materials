@@ -13,4 +13,4 @@ void AbstractView::OnActiveDictionariesChange() {
 }
 
 AbstractView::AbstractView(std::unique_ptr<Controller> controller)
-    : controller_(std::move(controller)) {}
+    : QMainWindow(nullptr), controller_(std::move(controller)) {}

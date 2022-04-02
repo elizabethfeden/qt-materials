@@ -3,6 +3,9 @@
 
 #include <string>
 #include <QMainWindow>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QLabel>
 
 #include "abstract_view.h"
 
@@ -24,12 +27,26 @@ class ConsoleView : public AbstractView {
 
  private:
   QString text_;
-  QString filename_;
   std::vector<size_t> dictionary_ids_;
 };
 
-class WindowView : public AbstractView, public QMainWindow {
+class WindowView : public AbstractView {
+  Q_OBJECT
 
+ public:
+  WindowView(std::unique_ptr<Controller> controller);
+  QString GetFilenameToLoad() override;
+  void SetText(const QString& text) override;
+  QString GetText() override;
+  std::vector<size_t> GetActiveDictionaryIds() override;
+  void ShowResults(const std::vector<QString>& results) override;
+
+ private:
+  QWidget* central_widget_;
+  QPushButton* load_;
+  QPushButton* analyze_;
+  QTextEdit* text_;
+  QLabel* results_;
 };
 
 

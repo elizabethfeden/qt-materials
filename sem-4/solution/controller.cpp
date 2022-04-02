@@ -6,7 +6,7 @@
 Controller::Controller(std::unique_ptr<AbstractModel> model) : model_(std::move(model)) {}
 
 std::vector<QString> Controller::Analyze(const QString& text, int top) {
-  static const QRegularExpression word("[a-zа-я']+");
+  static const QRegularExpression word("[^a-zа-я']+");
   QHash<QString, int> dict;
   for (const auto& string : text.toLower().split(word)) {
     if (dict.contains(string) ||
@@ -40,4 +40,9 @@ QString Controller::LoadText(const QString& filename) {
   QString text = QString::fromUtf8(input.readAll());
   input.close();
   return text;
+}
+
+std::unordered_map<size_t, QString>
+Controller::GetAvailableDictionaries() const {
+  return model_->GetAvailableDictionaries();
 }
