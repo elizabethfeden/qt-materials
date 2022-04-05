@@ -1,5 +1,6 @@
 #include <cmath>
 #include <QColorDialog>
+#include <QPalette>
 #include "plot_descriptor_widget.h"
 
 PlotDescriptorWidget::PlotDescriptorWidget(QWidget* parent) :
@@ -9,6 +10,11 @@ PlotDescriptorWidget::PlotDescriptorWidget(QWidget* parent) :
     layout_(new QGridLayout()) {
   color_change_button_->setText("Set color");
 
+  QPalette palette;
+  palette.setColor(QPalette::Button, Qt::black);
+  color_change_button_->setPalette(palette);
+  palette.setColor(QPalette::ButtonText, Qt::white);
+  color_change_button_->setPalette(palette);
   layout_->addWidget(line_edit_, 0, 0);
   layout_->addWidget(color_change_button_, 0, 1);
   layout_->addWidget(polynomial_, 0, 2);
@@ -24,6 +30,15 @@ void PlotDescriptorWidget::ConnectWidgets() {
           &QPushButton::clicked, [&]() {
         QColor color = QColorDialog::getColor(Qt::black, this);
         if (color.isValid()) {
+          QPalette palette;
+          palette.setColor(QPalette::Button, color);
+          color_change_button_->setPalette(palette);
+          QColor inverted_color;
+          inverted_color.setRed(255 - color.red());
+          inverted_color.setGreen(255 - color.green());
+          inverted_color.setBlue(255 - color.blue());
+          palette.setColor(QPalette::ButtonText, inverted_color);
+          color_change_button_->setPalette(palette);
           emit ColorSelected(color);
         }
       });
