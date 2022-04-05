@@ -10,7 +10,9 @@ void PaintWidget::Paint(
     const std::vector<QPoint>& points) {
   painter->save();
 
-  painter->translate(QWidget::width() / 2, QWidget::height() / 2);
+  QPoint new_center = QPoint(QWidget::width() / 2 , QWidget::height() / 2) +
+      pos();
+  painter->translate(new_center);
 
   QPainterPath axis_path;
   axis_path.moveTo(0, -QWidget::height() / 2);
@@ -18,21 +20,22 @@ void PaintWidget::Paint(
   axis_path.moveTo(-QWidget::width() / 2, 0);
   axis_path.lineTo(QWidget::width() / 2, 0);
 
-  QColor axis_color = Qt::black;
+  QColor axis_color;
   painter->setPen(axis_color);
   painter->drawPath(axis_path);
 
-
-  painter->setPen(plot_color);
+  double plot_thickness = 2;
+  painter->setPen({plot_color, plot_thickness});
   QPainterPath path;
   path.moveTo(points.front());
   for (const auto& point : points) {
     path.lineTo(point);
   }
-
-
   painter->drawPath(path);
 
+  painter->translate(-new_center);
+  painter->setPen({axis_color, 2 * plot_thickness});
+  painter->drawRect(geometry());
 
   painter->restore();
 }

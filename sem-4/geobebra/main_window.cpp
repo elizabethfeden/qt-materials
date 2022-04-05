@@ -55,14 +55,15 @@ void MainWindow::UpdatePlot(
   cur_plot.clear();
   cur_plot.reserve(width);
 
-  for (int x = -width / 2; x < width / 2; ++x) {
+  const double kStep = 0.01;
+  for (double x = -width / 2; x < width / 2; x += kStep) {
     double y = 0;
     for (double cur_parameter : parameters) {
       y *= x;
       y += cur_parameter;
     }
     if (y > -height / 2 && y < height / 2) {
-      cur_plot.emplace_back(x, static_cast<int>(-y));
+      cur_plot.emplace_back(x, -y);
     }
   }
 }
