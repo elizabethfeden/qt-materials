@@ -46,10 +46,11 @@ void MainWindow::paintEvent(QPaintEvent* event) {
 
 void MainWindow::ConnectWidgets() {
   connect(plot_descriptor_,
-          &PlotDescriptorWidget::ColorSelected, [&](const QColor& color) {
-        plots_[list_widget_->currentRow()].color = color;
-        repaint();
-      });
+          &PlotDescriptorWidget::ColorSelected,
+          [&](const QColor& color) {
+            plots_[list_widget_->currentRow()].color = color;
+            repaint();
+          });
 
   connect(plot_descriptor_,
           &PlotDescriptorWidget::EnteredNewPolynomial,
@@ -68,9 +69,16 @@ void MainWindow::ConnectWidgets() {
           });
 
   connect(list_widget_,
-          &QListWidget::itemClicked, [&](QListWidgetItem*) {
-        ChooseNewItem(list_widget_->currentRow());
-      });
+          &QListWidget::itemClicked,
+          [&](QListWidgetItem*) {
+            ChooseNewItem(list_widget_->currentRow());
+          });
+
+  connect(list_widget_,
+          &QListWidget::itemDoubleClicked,
+          [&](QListWidgetItem* item) {
+            RemoveItem(list_widget_->currentRow());
+          });
 }
 
 void MainWindow::UpdateChosenPlot(
@@ -109,4 +117,16 @@ void MainWindow::AddDefaultPlot() {
 void MainWindow::ChooseNewItem(int item_index) {
   plot_descriptor_->Update(list_widget_->currentItem()->text(),
                            plots_[item_index].color);
+}
+
+void MainWindow::RemoveItem(int item_index) {
+  plots_.erase(plots_.begin() + item_index);
+  list_widget_->takeItem(item_index);
+  repaint();
+
+  int new_choice_index = item_index;
+  if (new_choice_index == plots_.size()) {
+    --new_choice_index;
+  }
+  ChooseNewItem(new_choice_index);
 }

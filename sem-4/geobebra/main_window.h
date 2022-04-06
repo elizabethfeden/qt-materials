@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow {
   void UpdateChosenPlot(const std::vector<double>& parameters);
   void AddDefaultPlot();
   void ChooseNewItem(int item_index);
+  void RemoveItem(int item_index);
 
   QWidget* widget_;
   QGridLayout* layout_;
