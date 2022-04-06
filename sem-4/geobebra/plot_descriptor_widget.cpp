@@ -30,15 +30,7 @@ void PlotDescriptorWidget::ConnectWidgets() {
           &QPushButton::clicked, [&]() {
         QColor color = QColorDialog::getColor(Qt::black, this);
         if (color.isValid()) {
-          QPalette palette;
-          palette.setColor(QPalette::Button, color);
-          color_change_button_->setPalette(palette);
-          QColor inverted_color;
-          inverted_color.setRed(255 - color.red());
-          inverted_color.setGreen(255 - color.green());
-          inverted_color.setBlue(255 - color.blue());
-          palette.setColor(QPalette::ButtonText, inverted_color);
-          color_change_button_->setPalette(palette);
+          PaintColorChangeButton(color);
           emit ColorSelected(color);
         }
       });
@@ -46,12 +38,12 @@ void PlotDescriptorWidget::ConnectWidgets() {
   connect(line_edit_,
           &QLineEdit::editingFinished, [&]() {
         auto parameters = GetParameters();
-        UpdatePolynomial(parameters);
+        polynomial_->setText(GetPolynomialString(parameters));
         emit EnteredNewPolynomial(parameters);
       });
 }
 
-void PlotDescriptorWidget::UpdatePolynomial(
+QString PlotDescriptorWidget::GetPolynomialString(
     const std::vector<double>& parameters) {
   QString res;
   int cur_deg = parameters.size() - 1;
@@ -73,7 +65,10 @@ void PlotDescriptorWidget::UpdatePolynomial(
     }
     --cur_deg;
   }
-  polynomial_->setText("y = " + res);
+  if (res.isEmpty()) {
+    res = "0";
+  }
+  return "y = " + res;
 }
 
 std::vector<double> PlotDescriptorWidget::GetParameters() const {
@@ -83,4 +78,24 @@ std::vector<double> PlotDescriptorWidget::GetParameters() const {
     parameters.push_back(str_parameter.toDouble());
   }
   return parameters;
+}
+
+void PlotDescriptorWidget::Update(
+    const QString& polynomial_string,
+    const QColor& color) {
+  line_edit_->setText("");
+  polynomial_->setText(polynomial_string);
+  PaintColorChangeButton(color);
+}
+
+void PlotDescriptorWidget::PaintColorChangeButton(const QColor& color) {
+  QPalette palette;
+  palette.setColor(QPalette::Button, color);
+  color_change_button_->setPalette(palette);
+  QColor inverted_color;
+  inverted_color.setRed(255 - color.red());
+  inverted_color.setGreen(255 - color.green());
+  inverted_color.setBlue(255 - color.blue());
+  palette.setColor(QPalette::ButtonText, inverted_color);
+  color_change_button_->setPalette(palette);
 }

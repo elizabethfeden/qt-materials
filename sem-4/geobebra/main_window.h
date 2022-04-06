@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QListWidget>
 
 #include "paint_widget.h"
 #include "plot_descriptor_widget.h"
@@ -17,22 +18,26 @@ class MainWindow : public QMainWindow {
 
  private:
   void ConnectWidgets();
-  void UpdatePlot(const std::vector<double>& parameters);
+  void UpdateChosenPlot(const std::vector<double>& parameters);
+  void AddDefaultPlot();
+  void ChooseNewItem(int item_index);
 
   QWidget* widget_;
   QGridLayout* layout_;
 
   PlotDescriptorWidget* plot_descriptor_;
 
-  QSize minimal_size_{500, 500};
+  QSize minimal_size_{585, 500};
 
   struct PlotInfo {
     std::vector<QPoint> points;
     QColor color;
   };
 
-  PlotInfo plot_;
+  std::vector<PlotInfo> plots_;
 
   PaintWidget* paint_widget_;
-};
+  QListWidget* list_widget_;
 
+  QPushButton* add_plot_button_;
+};

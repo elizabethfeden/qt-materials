@@ -12,6 +12,9 @@ class PlotDescriptorWidget : public QWidget {
   explicit PlotDescriptorWidget(QWidget* parent = nullptr);
 
   std::vector<double> GetParameters() const;
+  static QString GetPolynomialString(const std::vector<double>& parameters);
+
+  void Update(const QString& polynomial_string, const QColor& color);
 
  signals:
   void EnteredNewPolynomial(const std::vector<double>& parameters);
@@ -19,7 +22,7 @@ class PlotDescriptorWidget : public QWidget {
 
  private:
   void ConnectWidgets();
-  void UpdatePolynomial(const std::vector<double>& parameters);
+  void PaintColorChangeButton(const QColor& color);
 
   QGridLayout* layout_;
 
