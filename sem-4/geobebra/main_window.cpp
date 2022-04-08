@@ -60,7 +60,7 @@ void MainWindow::ConnectWidgets() {
             auto polynomial_string =
                 PlotDescriptorWidget::GetPolynomialString(parameters);
             list_widget_->currentItem()->setText(polynomial_string);
-            parameters_[list_widget_->currentRow()] = parameters;
+            plots_[list_widget_->currentRow()].parameters = parameters;
             UpdatePlot(list_widget_->currentRow());
             repaint();
           });
@@ -96,7 +96,7 @@ void MainWindow::UpdatePlot(int plot_index) {
   const double kStep = 0.001;
   for (double x = -width / 2; x < width / 2; x += kStep) {
     double y = 0;
-    for (double cur_parameter : parameters_[plot_index]) {
+    for (double cur_parameter : plots_[plot_index].parameters) {
       y *= x;
       y += cur_parameter;
     }
@@ -111,8 +111,7 @@ void MainWindow::AddDefaultPlot() {
   list_widget_->addItem(
       PlotDescriptorWidget::GetPolynomialString(default_parameters));
   list_widget_->setCurrentRow(plots_.size());
-  plots_.push_back({});
-  parameters_.push_back(default_parameters);
+  plots_.push_back({{}, default_parameters});
   UpdatePlot(list_widget_->currentRow());
   ChooseNewItem(list_widget_->currentRow());
 }
@@ -124,7 +123,6 @@ void MainWindow::ChooseNewItem(int item_index) {
 
 void MainWindow::RemoveItem(int item_index) {
   plots_.erase(plots_.begin() + item_index);
-  parameters_.erase(parameters_.begin() + item_index);
   list_widget_->takeItem(item_index);
   repaint();
 

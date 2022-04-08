@@ -33,10 +33,10 @@ class MainWindow : public QMainWindow {
 
   struct PlotInfo {
     std::vector<QPoint> points;
+    std::vector<double> parameters;
     QColor color;
   };
 
-  std::vector<std::vector<double>> parameters_;
   std::vector<PlotInfo> plots_;
 
   PaintWidget* paint_widget_;
