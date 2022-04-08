@@ -8,7 +8,8 @@ class PaintWidget : public QWidget {
  public:
   explicit PaintWidget(QWidget* parent = nullptr);
 
-  void Paint(
+  void DrawBackground(QPainter* painter);
+  void DrawPlot(
       QPainter* painter,
       const QColor& plot_color,
       const std::vector<QPoint>& points);
