@@ -10,6 +10,10 @@ void PaintWidget::Paint(
     const std::vector<QPoint>& points) {
   painter->save();
 
+  painter->setBrush(Qt::white);
+  painter->drawRect(geometry());
+  painter->setBrush(Qt::NoBrush);
+
   QPoint new_center = QPoint(QWidget::width() / 2 , QWidget::height() / 2) +
       pos();
   painter->translate(new_center);
