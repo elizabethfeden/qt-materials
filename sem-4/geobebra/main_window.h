@@ -15,10 +15,11 @@ class MainWindow : public QMainWindow {
  public:
   MainWindow();
   void paintEvent(QPaintEvent* event) override;
+  void resizeEvent(QResizeEvent* event) override;
 
  private:
   void ConnectWidgets();
-  void UpdateChosenPlot(const std::vector<double>& parameters);
+  void UpdatePlot(int plot_index);
   void AddDefaultPlot();
   void ChooseNewItem(int item_index);
   void RemoveItem(int item_index);
@@ -35,6 +36,7 @@ class MainWindow : public QMainWindow {
     QColor color;
   };
 
+  std::vector<std::vector<double>> parameters_;
   std::vector<PlotInfo> plots_;
 
   PaintWidget* paint_widget_;

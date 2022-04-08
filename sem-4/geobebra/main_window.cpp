@@ -39,8 +39,10 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     AddDefaultPlot();
   }
 
+  paint_widget_->DrawBackground(&painter);
+
   for (const auto& plot : plots_) {
-    paint_widget_->Paint(&painter, plot.color, plot.points);
+    paint_widget_->DrawPlot(&painter, plot.color, plot.points);
   }
 }
 
@@ -58,7 +60,8 @@ void MainWindow::ConnectWidgets() {
             auto polynomial_string =
                 PlotDescriptorWidget::GetPolynomialString(parameters);
             list_widget_->currentItem()->setText(polynomial_string);
-            UpdateChosenPlot(parameters);
+            parameters_[list_widget_->currentRow()] = parameters;
+            UpdatePlot(list_widget_->currentRow());
             repaint();
           });
 
@@ -81,20 +84,19 @@ void MainWindow::ConnectWidgets() {
           });
 }
 
-void MainWindow::UpdateChosenPlot(
-    const std::vector<double>& parameters) {
+void MainWindow::UpdatePlot(int plot_index) {
   int width = paint_widget_->width();
   int height = paint_widget_->height();
 
-  auto& cur_plot = plots_[list_widget_->currentRow()].points;
+  auto& cur_plot = plots_[plot_index].points;
 
   cur_plot.clear();
   cur_plot.reserve(width);
 
-  const double kStep = 0.01;
+  const double kStep = 0.001;
   for (double x = -width / 2; x < width / 2; x += kStep) {
     double y = 0;
-    for (double cur_parameter : parameters) {
+    for (double cur_parameter : parameters_[plot_index]) {
       y *= x;
       y += cur_parameter;
     }
@@ -110,7 +112,8 @@ void MainWindow::AddDefaultPlot() {
       PlotDescriptorWidget::GetPolynomialString(default_parameters));
   list_widget_->setCurrentRow(plots_.size());
   plots_.push_back({});
-  UpdateChosenPlot(default_parameters);
+  parameters_.push_back(default_parameters);
+  UpdatePlot(list_widget_->currentRow());
   ChooseNewItem(list_widget_->currentRow());
 }
 
@@ -121,6 +124,7 @@ void MainWindow::ChooseNewItem(int item_index) {
 
 void MainWindow::RemoveItem(int item_index) {
   plots_.erase(plots_.begin() + item_index);
+  parameters_.erase(parameters_.begin() + item_index);
   list_widget_->takeItem(item_index);
   repaint();
 
@@ -129,4 +133,12 @@ void MainWindow::RemoveItem(int item_index) {
     --new_choice_index;
   }
   ChooseNewItem(new_choice_index);
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event) {
+  QWidget::resizeEvent(event);
+
+  for (int i = 0; i < plots_.size(); ++i) {
+    UpdatePlot(i);
+  }
 }
