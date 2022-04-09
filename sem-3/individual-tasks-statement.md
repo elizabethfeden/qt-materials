@@ -1,44 +1,5 @@
 # Seminar 3 task
 
-## Common tasks:
-
-### 1. Isometric projection of a cube
-
-https://en.wikipedia.org/wiki/Isometric_projection
-
-![](cube_base.png)
-
-* Learn what is isometric projection
-* Draw isometric 3D-axis of different colors in the center of the screen
-* Draw an axis-aligned unit cube in the center of origin
-  * Remember what is a projection matrix and rotation matrix
-  * https://en.wikipedia.org/wiki/Isometric_projection#Mathematics
-* Add controls to rotate the cube along different axis on 10 degrees
-* Enjoy your isometric projection :)
-
-![](cube_rotated.png)
-
-### 2. Circles Collider
-
-![](collider.gif)
-
-* Draw a circle in the center of the screen with reference orientation visualized
-  * You could just draw one fixed radius line to show circles orientation
-* Generate it with some random velocity/acceleration and make it move
-  * ***Tip**: add some friction to decay acceleration over time*
-* Now generate a number of circles
-* Make them teleport to opposite screen border when reaching one
-* Process static collision, i.e. detect overlapping and displace circles from the collision
-* Process dynamic collision, i.e. change circles velocities according to the law of momentum conservation
-in elastic collision
-  * https://en.wikipedia.org/wiki/Momentum
-  * https://en.wikipedia.org/wiki/Elastic_collision
-  * https://ericleong.me/research/circle-circle/
-* **Extra points** - use QGraphicsScene instead of QPainter
-and allow to select a circle by mouse and push it in clicked direction
-
-## Extra tasks:
-
 For extra points, complete one of the following tasks. Either show that it works or create a pull request.
 
 ### 1. Small cartoon
