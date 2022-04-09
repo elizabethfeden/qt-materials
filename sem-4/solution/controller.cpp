@@ -22,7 +22,7 @@ std::vector<QString> Controller::Analyze(const QString& text, int top) {
       heap(pairs.begin(), pairs.end());
   std::vector<QString> result;
   result.reserve(top);
-  for (int i = 0; i < top; ++i) {
+  for (int i = 0; i < std::min(static_cast<size_t>(top), pairs.size()); ++i) {
     result.push_back(heap.top().second);
     heap.pop();
   }

@@ -15,7 +15,7 @@ std::unique_ptr<AbstractModel> GetModel(const ModelOption& option) {
   if (option == ModelOption::kHash) {
     return std::make_unique<HashModel>();
   } else {
-  //  return std::make_unique<TrieModel>();
+    return std::make_unique<TrieModel>();
   }
 }
 

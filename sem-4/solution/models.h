@@ -1,10 +1,13 @@
 #ifndef MODELS_H
 #define MODELS_H
 
-#include "abstract_model.h"
+#include <memory>
 #include <vector>
-#include <QString>
+
 #include <QSet>
+#include <QString>
+
+#include "abstract_model.h"
 
 // -- TASK --
 // Implement the models. HashModel should store words entries in an
@@ -41,12 +44,12 @@ class TrieModel : public AbstractModel {
     TrieNode() = default;
     explicit TrieNode(QChar value);
 
-    std::map<QChar, TrieNode*> next;
+    std::map<QChar, std::shared_ptr<TrieNode>> next;
     QChar value;
     std::vector<size_t> dictionaries;
   };
 
-  TrieNode* root_;
+  std::shared_ptr<TrieNode> root_;
 };
 
 #endif // MODELS_H
