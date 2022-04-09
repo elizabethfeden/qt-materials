@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include <QString>
+#include <QMainWindow>
 
 #include "controller.h"
 
@@ -14,7 +15,9 @@
  * and their results, e.g. the text they loaded.
  */
 
-class AbstractView {
+class AbstractView : public QMainWindow {
+  Q_OBJECT
+
  public:
   explicit AbstractView(std::unique_ptr<Controller> controller);
 
@@ -33,4 +36,4 @@ class AbstractView {
 };
 
 
-#endif // ABSTRACT_VIEW_H
+#endif  // ABSTRACT_VIEW_H

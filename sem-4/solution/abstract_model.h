@@ -11,7 +11,7 @@
 
 class AbstractModel {
  public:
-  virtual std::unordered_map<size_t, QString>
+  std::unordered_map<size_t, QString>
       GetAvailableDictionaries() const { return kDictionaryNames_; }
   virtual void SetActiveDictionaries(
       const std::vector<size_t>& active_dictionary_ids) = 0;
@@ -19,13 +19,13 @@ class AbstractModel {
 
  private:
   const std::unordered_map<size_t, QString> kDictionaryNames_ = {
-      {1, "english"},
-      {2, "russian"},
-      {3, "adjectives"},
-      {4, "adverbs"},
-      {5, "nouns"},
-      {6, "verbs"}
+      {0, "english"},
+      {1, "russian"},
+      {2, "adjectives"},
+      {3, "adverbs"},
+      {4, "nouns"},
+      {5, "verbs"}
   };
 };
 
-#endif // ABSTRACT_MODEL_H
+#endif  // ABSTRACT_MODEL_H

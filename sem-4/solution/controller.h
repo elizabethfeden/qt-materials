@@ -21,10 +21,12 @@ class Controller {
   void SetActiveDictionaries(const std::vector<size_t>& active_dictionary_ids);
   std::vector<QString> Analyze(const QString& text, int top = 10);
   QString LoadText(const QString& filename);
+  std::unordered_map<size_t, QString>
+      GetAvailableDictionaries() const;
 
  private:
   std::unique_ptr<AbstractModel> model_;
 };
 
 
-#endif // CONTROLLER_H
+#endif  // CONTROLLER_H
