@@ -1,0 +1,24 @@
+<RCC>
+    <qresource>
+        <file>garderob.jpg</file>
+        <file>mujik.png</file>
+        <file>shoes1.png</file>
+        <file>shoes2.png</file>
+        <file>sweater1.png</file>
+        <file>sweater2.png</file>
+        <file>sweater3.png</file>
+        <file>sweater4.png</file>
+        <file>sweater5.png</file>
+        <file>sweater6.png</file>
+        <file>sweater7.png</file>
+        <file>sweater8.png</file>
+        <file>sweater9.png</file>
+        <file>pants1.png</file>
+        <file>pants2.png</file>
+        <file>watches1.png</file>
+        <file>watches2.png</file>
+        <file>watches3.png</file>
+        <file>watches4.png</file>
+        <file>watches5.png</file>
+    </qresource>
+</RCC>
