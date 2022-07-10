@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(sem_3_task_3)
+project(sem_3_common)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -13,7 +13,7 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(main main.cpp main_window.cpp main_window.h paint_widget.cpp paint_widget.h plot_descriptor_widget.cpp plot_descriptor_widget.h)
+add_executable(main main.cpp main_window.cpp main_window.h paint_widget.cpp paint_widget.h)
 target_link_libraries(main
         Qt::Core
         Qt::Gui

@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.20)
-project(sem3_solution)
+cmake_minimum_required(VERSION 3.21)
+project(sem_3_task_2)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -13,9 +13,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(sem3_solution main.cpp main_window.h main_window.cpp painters.h painters.cpp resources.qrc)
-target_link_libraries(sem3_solution
+add_executable(main main.cpp main_window.cpp main_window.h painters.cpp painters.h resources.qrc)
+target_link_libraries(main
         Qt::Core
         Qt::Gui
         Qt::Widgets
         )
+

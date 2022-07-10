@@ -1,5 +1,5 @@
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QSpinBox>
@@ -7,16 +7,16 @@
 #include <QProgressBar>
 #include <QKeyEvent>
 
-class main_window : public QMainWindow{
-  Q_OBJECT
+class MainWindow : public QMainWindow {
+ Q_OBJECT
  public:
-  main_window();
-  void update();
+  MainWindow();
+  void Update();
 
  private:
-  QSpinBox* spin_box;
-  QPushButton* button;
-  QProgressBar* progress_bar;
+  QSpinBox* spin_box_;
+  QPushButton* button_;
+  QProgressBar* progress_bar_;
 };
 
-#endif //MAIN_WINDOW_H
+#endif //MAINWINDOW_H

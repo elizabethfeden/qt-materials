@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(sem-4)
+project(sem_4)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -13,7 +13,7 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(sem-4
+add_executable(sem4
         main.cpp
         controller.cpp
         abstract_view.cpp
@@ -23,7 +23,7 @@ add_executable(sem-4
         resources.qrc
         )
 
-target_link_libraries(sem-4
+target_link_libraries(sem4
         Qt::Core
         Qt::Gui
         Qt::Widgets

@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
-project(FoxAndField)
+project(sem_3_task_1)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+
 
 find_package(Qt6 COMPONENTS
         Core
@@ -12,9 +13,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(FoxAndField main.cpp main_window.cpp main_window.h resources.qrc main_window.cpp main_window.h)
-target_link_libraries(FoxAndField
+add_executable(main main.cpp main_window.cpp main_window.h resources.qrc)
+target_link_libraries(main
         Qt::Core
         Qt::Gui
         Qt::Widgets
         )
+

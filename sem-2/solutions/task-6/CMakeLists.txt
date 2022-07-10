@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.20)
-project(task6)
+cmake_minimum_required(VERSION 3.21)
+project(sem_2_task_6)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -13,9 +13,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(task6 main.cpp main_window.cpp)
-target_link_libraries(task6
+add_executable(main main.cpp main_window.cpp main_window.h)
+target_link_libraries(main
         Qt::Core
         Qt::Gui
         Qt::Widgets
         )
+
