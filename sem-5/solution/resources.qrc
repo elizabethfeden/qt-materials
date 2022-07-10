@@ -1,0 +1,10 @@
+<RCC>
+    <!--We use prefix to guarantee unique naming of these resources.-->
+    <!--Same result could also be achieved by placing .qm files in some specific folder,-->
+    <!--but name prefix is more in a QT-way-->
+    <qresource prefix="/translations">
+        <file>by.qm</file>
+        <file>de.qm</file>
+        <file>en.qm</file>
+    </qresource>
+</RCC>
