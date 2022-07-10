@@ -1,10 +1,10 @@
 #include "widget.h"
 
-Widget::Widget(QWidget* parent)
-    : QWidget(parent) {
-  button_ = new MouseTracking(this);
-  button_->setText("Press me");
-
+MainWindow::MainWindow(QWidget* parent) :
+    QMainWindow(parent),
+    button_(new MouseTrackingButton(this, "Press me")),
+    button_width_(200),
+    button_height_(50) {
   button_->setStyleSheet("background-color: red;"
                          "border-style: outset;"
                          "border-width: 2px;"
@@ -13,38 +13,31 @@ Widget::Widget(QWidget* parent)
                          "font: bold 14px;"
                          "min-width: 10em;"
                          "padding: 6px;");
-
-  button_width_ = 200;
-  button_height_ = 50;
   button_->setFixedSize(button_width_, button_height_);
+  button_->move((MainWindow::width() - button_width_) / 2,
+                (QWidget::height() - button_height_) / 2);
 
   resize(340, 250);
 
-  button_->move((Widget::width() - button_width_) / 2,
-                (QWidget::height() - button_height_) / 2);
-
   connect(button_,
-          SIGNAL(Mouse_In()),
+          &MouseTrackingButton::MouseDetected,
           this,
-          SLOT(Mouse_Detector_In()));
+          &MainWindow::OnMouseDetected);
 
   connect(button_,
           &QPushButton::pressed,
           this,
-          &Widget::ButtonPressEvent);
+          &MainWindow::OnButtonPressed);
 }
 
-void Widget::Mouse_Detector_In() {
-  button_->setGeometry(rand() % (Widget::width() - button_width_),
-                       rand() % (Widget::height() - button_height_),
-                       100,
-                       30);
+void MainWindow::OnMouseDetected() {
+  button_->move(rand() % (MainWindow::width() - button_width_),
+                rand() % (MainWindow::height() - button_height_));
   // button_->setGeometry(10, 10, 200, 30);  // If you can't catch the button.
 }
 
-void Widget::ButtonPressEvent() {
+void MainWindow::OnButtonPressed() {
   button_->setText("Are you winning son?");
-  //button_->setStyleSheet("color: blue;" "background-color: yellow;");
   button_->setStyleSheet("color: blue;"
                          "background-color: yellow;"
                          "border-style: outset;"
@@ -56,10 +49,11 @@ void Widget::ButtonPressEvent() {
                          "padding: 6px;");
 }
 
-MouseTracking::MouseTracking(QWidget* parent) : QPushButton(parent) {
-  this->setMouseTracking(true);
+MouseTrackingButton::MouseTrackingButton(QWidget* parent, const QString& name)
+    : QPushButton(name, parent) {
+  setMouseTracking(true);
 }
 
-void MouseTracking::mouseMoveEvent(QMouseEvent* e) {
-  emit Mouse_In();
+void MouseTrackingButton::mouseMoveEvent(QMouseEvent* event) {
+  emit MouseDetected();
 }

@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "main_window.h"
 
 MainWindow::MainWindow() :
     spin_box_(new QSpinBox(this)),
@@ -16,12 +16,11 @@ MainWindow::MainWindow() :
 
   resize(1000, 1000);
 
-  connect(button_, &QPushButton::released, this, &MainWindow::Update);
+  connect(button_, &QPushButton::clicked, this, &MainWindow::Update);
 }
 
 void MainWindow::Update() {
   spin_box_->setReadOnly(true);
   progress_bar_->setMaximum(spin_box_->value());
-  int tech = progress_bar_->value() + 1;
-  progress_bar_->setValue(tech);
+  progress_bar_->setValue(progress_bar_->value() + 1);
 }

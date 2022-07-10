@@ -24,9 +24,6 @@ private:
     QPushButton* button_;
     QPushButton* reset_;
     QProgressBar* progress_bar_;
-
-signals:
-
 };
 
 #endif  // MAINWINDOW_H

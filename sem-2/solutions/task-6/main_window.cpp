@@ -26,8 +26,8 @@ MainWindow::MainWindow() :
 void MainWindow::PlaceWidgets(const QSize& window_size) {
   PlaceButton();
   horizontal_slider->setGeometry(
-      kSliderThickness,window_size.height() - kSliderThickness,
-      window_size.width() - kSliderThickness,kSliderThickness);
+      kSliderThickness, window_size.height() - kSliderThickness,
+      window_size.width() - kSliderThickness, kSliderThickness);
   vertical_slider->setGeometry(
       0, 0,
       kSliderThickness, window_size.height() - kSliderThickness);
@@ -36,12 +36,12 @@ void MainWindow::PlaceWidgets(const QSize& window_size) {
 void MainWindow::PlaceButton() {
   int height_range = QWidget::height() - button_->height() - kSliderThickness;
   int y = height_range * (vertical_slider->maximum() - vertical_slider->value())
-      / (vertical_slider->maximum() - vertical_slider->minimum());
+          / (vertical_slider->maximum() - vertical_slider->minimum());
   button_->setGeometry(button_->x(), y, button_->width(), button_->height());
   int width_range = QWidget::width() - button_->width() - kSliderThickness;
   int x = width_range * horizontal_slider->value()
-      / (horizontal_slider->maximum() - horizontal_slider->minimum())
-      + kSliderThickness;
+          / (horizontal_slider->maximum() - horizontal_slider->minimum())
+          + kSliderThickness;
   button_->setGeometry(x, y, button_->width(), button_->height());
 }
 

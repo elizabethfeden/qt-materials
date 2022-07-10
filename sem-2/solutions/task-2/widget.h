@@ -1,12 +1,13 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QMouseEvent>
+#include <vector>
+
 #include <QKeyEvent>
 #include <QLabel>
-#include <vector>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QWidget>
 
 class Widget : public QWidget {
  Q_OBJECT

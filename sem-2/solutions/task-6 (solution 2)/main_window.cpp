@@ -1,12 +1,12 @@
 #include "main_window.h"
 
 MainWindow::MainWindow() :
-                           QMainWindow(nullptr),
-                           layout_(new QGridLayout()),
-                           widget_(new QWidget(this)),
-                           vertical_slider_(new QSlider(Qt::Vertical, widget_)),
-                           horizontal_slider_(new QSlider(Qt::Horizontal, widget_)),
-                           move_button_(new QPushButton("Move me", widget_)) {
+    QMainWindow(nullptr),
+    layout_(new QGridLayout()),
+    widget_(new QWidget(this)),
+    vertical_slider_(new QSlider(Qt::Vertical, widget_)),
+    horizontal_slider_(new QSlider(Qt::Horizontal, widget_)),
+    move_button_(new QPushButton("Move me", widget_)) {
   resize(400, 400);
   ManageLayout();
 }
@@ -40,13 +40,15 @@ void MainWindow::ManageLayout() {
 
 void MainWindow::MoveButton() {
   int new_x = horizontal_slider_->pos().x() +
-      (horizontal_slider_->width() * (horizontal_slider_->sliderPosition()) / 100);
+              (horizontal_slider_->width() *
+               (horizontal_slider_->sliderPosition()) / 100);
 
   int new_y = vertical_slider_->pos().y() + vertical_slider_->height() -
-      (vertical_slider_->height() * (vertical_slider_->sliderPosition()) / 100) -
-      (horizontal_slider_->height() * 12 / 10);
+              (vertical_slider_->height() *
+               (vertical_slider_->sliderPosition()) / 100) -
+              (horizontal_slider_->height() * 12 / 10);
 
-  move_button_->move(new_x,new_y);
+  move_button_->move(new_x, new_y);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event) {

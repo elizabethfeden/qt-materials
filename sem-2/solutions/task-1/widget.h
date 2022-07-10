@@ -1,36 +1,33 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include <QPushButton>
+#include <QWidget>
 
-class MouseTracking : public QPushButton {
+class MouseTrackingButton : public QPushButton {
  Q_OBJECT
  public:
-  explicit MouseTracking(QWidget* parent = nullptr);
-
-  void mouseMoveEvent(QMouseEvent* e) override;
+  explicit MouseTrackingButton(QWidget* parent = nullptr,
+                               const QString& name = "");
+  void mouseMoveEvent(QMouseEvent* event) override;
 
  signals:
-  void Mouse_In();
+  void MouseDetected();
 };
 
-class Widget : public QWidget {
+class MainWindow : public QMainWindow {
  Q_OBJECT
  public:
-  explicit Widget(QWidget* parent = nullptr);
-
-
+  explicit MainWindow(QWidget* parent = nullptr);
 
  private:
-
-  QPushButton* button_ = nullptr;
+  MouseTrackingButton* button_;
   int button_width_;
   int button_height_;
 
- private slots:
-  void Mouse_Detector_In();
-  void ButtonPressEvent();
+  void OnMouseDetected();
+  void OnButtonPressed();
 };
 
 #endif // WIDGET_H
